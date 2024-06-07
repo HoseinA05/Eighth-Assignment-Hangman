@@ -1,0 +1,44 @@
+/* Login / Sign up Section */
+.inputLabel{
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.inputField{
+    -fx-font-size: 16px;
+}
+
+/* Common Styles (Both Login And Menu) */
+.titleTxt{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.menuBtn{
+    -fx-padding: 8px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 25px;
+    -fx-background-radius: 50px;
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-background-color: #2a87df;
+}
+
+.toastText{
+    -fx-font-size: 18px;
+    -fx-background-radius: 20;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-padding: 10px;
+}
+
+/* Menu Styling */
+.userinfoLabel{
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-border-width: 0px 0px 2px 0px; 
+    -fx-border-style: dashed;
+    -fx-border-color: black;
+}
