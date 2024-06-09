@@ -13,16 +13,23 @@
         <SVGPath fx:id="hangmanSvg" styleClass="hangman-svg" />
 
         <Label styleClass="gameTitle" text="HANGMAN GAME" alignment="BASELINE_CENTER"/>
+        <Label fx:id="timeLabel" text="Time: 0 seconds"/>
     </VBox>
 
     <VBox style="-fx-spacing: 40px; -fx-alignment: center;">
+
+        <HBox style="-fx-spacing: 40px; -fx-alignment: center;">
+            <Label fx:id="usernameLabel" text="Username: "/>
+            <Label fx:id="nameLabel" text="Name: "/>
+        </HBox>
+
         <HBox fx:id="answerContainer" style="-fx-alignment: top-center; -fx-spacing: 4px;">
-            <Label text="R" styleClass="ansLetter" />
-            <Label text="A" styleClass="ansLetter" />
-            <Label text="B" styleClass="ansLetter" />
-            <Label text="B" styleClass="ansLetter" />
-            <Label text="I" styleClass="ansLetter" />
-            <Label text="T" styleClass="ansLetter" />
+<!--            <Label text="R" styleClass="ansLetter" />-->
+<!--            <Label text="A" styleClass="ansLetter" />-->
+<!--            <Label text="B" styleClass="ansLetter" />-->
+<!--            <Label text="B" styleClass="ansLetter" />-->
+<!--            <Label text="I" styleClass="ansLetter" />-->
+<!--            <Label text="T" styleClass="ansLetter" />-->
         </HBox>
 
         <GridPane fx:id="keysGrid" styleClass="keysGrid">
@@ -30,10 +37,5 @@
         </GridPane>
 
     </VBox>
-<!--    <padding>-->
-<!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
-<!--    </padding>-->
-
-<!--    <TextField fx:id="inp" promptText="Part..." onAction="#inputAct"/>-->
 
 </HBox>

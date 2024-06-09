@@ -3,12 +3,18 @@ package hangman;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MenuController {
@@ -31,11 +37,12 @@ public class MenuController {
     @FXML
     public TextField nameInput;
     @FXML
-    public TextField passwordInput;
+    public PasswordField passwordInput;
     @FXML
     public Label toastText;
     @FXML
     public Button sendDataBtn;
+
     @FXML
     public void initialize(){
         // Hide The Name Input Box To First Determine If The user Has been already registered or not.
@@ -51,6 +58,12 @@ public class MenuController {
         // Hide The Menu At first
         menuArea.setVisible(false);
         menuArea.setManaged(false);
+    }
+
+    public void backToManu(User user){
+        this.currentUser = user;
+        showToast("Back to Menu!", Color.WHITE);
+        switchToMenu();
     }
 
     public void showToast(String text, Color textColor){
@@ -84,12 +97,12 @@ public class MenuController {
 
     private boolean doesUsernameExists(String username){
         if(db.getUser(username) == null ){
-            sendDataBtn.setText("Sing Up");
+            sendDataBtn.setText("Sign Up");
             nameInputBox.setVisible(true);
             nameInputBox.setManaged(true);
             return false;
         } else {
-            sendDataBtn.setText("Sing in");
+            sendDataBtn.setText("Sign in");
             nameInputBox.setVisible(false);
             nameInputBox.setManaged(false);
             return true;
@@ -108,7 +121,7 @@ public class MenuController {
             // Sign in
             if (user.getPassword().equals(password)) {
                 currentUser = user;
-                showToast("Successfully Signed in! Welcome Back!", Color.GREEN);
+                showToast("Successfully Signed in! Welcome Back!", Color.WHITE);
                 switchToMenu();
             } else {
                 showToast("Wrong Password!", Color.RED);
@@ -122,7 +135,7 @@ public class MenuController {
                     User newUser = new User(username, name, password);
                     if (db.registerUser(name, username, password)) {
                         currentUser = newUser;
-                        showToast("Successfully Signed up! Welcome!", Color.GREEN);
+                        showToast("Successfully Signed up! Welcome!", Color.WHITE);
                         switchToMenu();
                     } else showToast("Failed to Sign up! Please Try again later.", Color.RED);
 
@@ -132,6 +145,7 @@ public class MenuController {
 
         }
     }
+
     private boolean showConfirmationBox() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
@@ -162,4 +176,30 @@ public class MenuController {
         nameLabel.setText("Name: " + currentUser.getName());
     }
 
+    public void playGameHandler(ActionEvent actionEvent) throws IOException {
+        // Load the FXML file
+        FXMLLoader fxmlLoader = new FXMLLoader(HangmanApp.class.getResource("hangman-view.fxml"));
+        Parent root = fxmlLoader.load();
+
+        // Get the controller instance
+        HangmanController controller = fxmlLoader.getController();
+
+        // Pass the data to the controller
+        controller.setUser(this.currentUser);
+
+        // Create the scene with the new root node
+        Scene scene = new Scene(root, 700, 400);
+        // Add the stylesheet
+        scene.getStylesheets().add(getClass().getResource("styles/hangman-mainpage.css").toExternalForm());
+
+        // Get the current stage using the event source
+        Stage appStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        // Set the new scene on the stage
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
+    public void showHistoryGames(ActionEvent actionEvent) {
+
+    }
 }

@@ -89,6 +89,45 @@ public class DatabaseManager {
 
     }
 
+    public boolean storeGame(Game game, String username){
+        // System.out.println("DB Storing Game Data...");
+        // System.out.println("Info: ");
+        // System.out.println("GameID: " + game.getGameID());
+        // System.out.println("Username: " + username);
+        // System.out.println("Word: " + game.getWordToGuess());
+        // System.out.println("Wrong Guesses: " + game.getWrongGuesses());
+        // System.out.println("Time: " + game.getGameTime());
+        // System.out.println("Win: " + game.didWin());
+        String checkUserSql = "SELECT 1 FROM gameinfo WHERE gameid = ?";
+        String insertUserSql = "INSERT INTO gameinfo (gameid, username, word, wrongguesses, gametime, win) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement checkGameStmt = connection.prepareStatement(checkUserSql);
+             PreparedStatement insertUserStmt = connection.prepareStatement(insertUserSql)) {
+
+            // Check if game already exists
+            checkGameStmt.setString(1, game.getGameID());
+            ResultSet rs = checkGameStmt.executeQuery();
+            if (rs.next()) {
+                return false; // Game already exists
+            }
+            rs.close();
+
+            // Insert new Game Data
+            insertUserStmt.setString(1, game.getGameID());
+            insertUserStmt.setString(2, username);
+            insertUserStmt.setString(3, game.getWordToGuess());
+            insertUserStmt.setInt(4, game.getWrongGuesses());
+            insertUserStmt.setString(5, game.getGameTime());
+            insertUserStmt.setBoolean(6, game.didWin());
+
+            int affectedRows = insertUserStmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Error in registering new user: " + e.getMessage());
+            return false;
+        }
+
+    }
+
     public static void main(String[] args) {
         // DatabaseManager dbManager = DatabaseManager.getDb();
     }

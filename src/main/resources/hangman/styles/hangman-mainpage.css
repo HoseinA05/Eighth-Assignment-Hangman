@@ -23,6 +23,10 @@
     -fx-border-color: black;
 }
 
+.red{
+    -fx-text-fill: red;
+}
+
 .keysGrid{
     -fx-hgap: 4px;
     -fx-vgap: 4px;

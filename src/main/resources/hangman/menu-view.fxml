@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #11772b" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hangman.MenuController">
 
     <VBox fx:id="loginArea" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" style="-fx-alignment: center; -fx-spacing: 7px" >
@@ -30,7 +31,7 @@
 
         <HBox style="-fx-alignment: center; -fx-spacing: 5px; -fx-font-size: 16px;">
             <Label text="Password: " styleClass="inputLabel"/>
-            <TextField fx:id="passwordInput" styleClass="inputField" onAction="#sendUserData"/>
+            <PasswordField fx:id="passwordInput" styleClass="inputField" onAction="#sendUserData"/>
         </HBox>
 
         <Button fx:id="sendDataBtn" text="Sign in" styleClass="menuBtn" onAction="#sendUserData">
@@ -55,8 +56,8 @@
             </VBox.margin>
         </HBox>
 
-        <Button text="Play!" styleClass="menuBtn"/>
-        <Button text="History of Games" styleClass="menuBtn"/>
+        <Button text="Play!" styleClass="menuBtn" onAction="#playGameHandler"/>
+        <Button text="History of Games" styleClass="menuBtn" onAction="#showHistoryGames"/>
         <Button text="Leaderboard" styleClass="menuBtn"/>
     </VBox>
 
