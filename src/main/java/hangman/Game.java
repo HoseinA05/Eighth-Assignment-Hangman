@@ -31,6 +31,14 @@ public class Game {
         dbManager = DatabaseManager.getDb();
     }
 
+    public Game(String gameID, String wordToGuess, int wrongGuesses, String gameTime, boolean didWin){
+        this.gameID = UUID.fromString(gameID);
+        this.wordToGuess = wordToGuess;
+        this.wrongGuesses = wrongGuesses;
+        this.gameTime = gameTime;
+        this.didWin = didWin;
+    }
+
     private String generateWordToGuess(){
         Random random = new Random();
         StringBuilder response = new StringBuilder();
@@ -64,14 +72,14 @@ public class Game {
         JSONArray jsonArray = new JSONArray(response.toString());
         JSONObject randomAnimal = null;
         String animalName = "";
-        // Get a Proper Name (Length be less than 10 And not contain -_)
+        // Get a Proper Name (Length be less than 10 And not contain -_ (space))
         do {
             int randomIndex = random.nextInt(jsonArray.length());
             randomAnimal = jsonArray.getJSONObject(randomIndex);
             animalName = randomAnimal.getString("name");
 
             System.out.println("Got a Random name.");
-        } while (animalName.length() > 10 || animalName.contains("-_"));
+        } while (animalName.length() > 10 || animalName.contains("-_ "));
 
         System.out.println("Randomly selected animal: " + animalName);
 

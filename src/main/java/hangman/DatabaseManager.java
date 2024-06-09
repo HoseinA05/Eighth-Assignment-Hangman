@@ -1,6 +1,8 @@
 package hangman;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DatabaseManager {
     private static DatabaseManager db = null;
@@ -126,6 +128,53 @@ public class DatabaseManager {
             return false;
         }
 
+    }
+
+    public ArrayList<Game> getGamesOfUser(String username){
+        ArrayList<Game> gamesOfUser = new ArrayList<>();
+
+        String query = "SELECT * FROM gameinfo WHERE username = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                Game g = new Game(resultSet.getString("gameid"), resultSet.getString("word"), resultSet.getInt("wrongguesses"), resultSet.getString("gametime"), resultSet.getBoolean("win"));
+                gamesOfUser.add(g);
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error in getUser: " + e.getMessage());
+        }
+
+        return gamesOfUser;
+    }
+
+    public HashMap<String, Integer> getLeaderBoard(){
+        HashMap<String, Integer> leaderboard = new HashMap<>();
+
+        try (Statement statement = connection.createStatement()) {
+
+            statement.execute("SELECT username, win FROM gameinfo");
+            ResultSet resultSet = statement.getResultSet();
+
+            while(resultSet.next()){
+                String name = resultSet.getString("username");
+                boolean win = resultSet.getBoolean("win");
+                if (win){
+                    if (leaderboard.containsKey(name)) leaderboard.replace(name, leaderboard.get(name) + 1);
+                    else leaderboard.put(name, 1);
+                }
+            }
+            statement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error in getUser: " + e.getMessage());
+        }
+
+        return leaderboard;
     }
 
     public static void main(String[] args) {

@@ -189,7 +189,6 @@ public class MenuController {
 
         // Create the scene with the new root node
         Scene scene = new Scene(root, 700, 400);
-        // Add the stylesheet
         scene.getStylesheets().add(getClass().getResource("styles/hangman-mainpage.css").toExternalForm());
 
         // Get the current stage using the event source
@@ -199,7 +198,29 @@ public class MenuController {
         appStage.show();
     }
 
-    public void showHistoryGames(ActionEvent actionEvent) {
+    public void showHistoryGames(ActionEvent actionEvent) throws IOException {
+        Button btn = (Button) actionEvent.getSource();
+        boolean isLeaderboard = btn.getText().equals("Leaderboard");
 
+        // Load the FXML file
+        FXMLLoader fxmlLoader = new FXMLLoader(HangmanApp.class.getResource("historyGames-view.fxml"));
+        Parent root = fxmlLoader.load();
+
+        // Get the controller instance
+        HistoryGamesController controller = fxmlLoader.getController();
+
+        // Pass the data to the controller
+        if (isLeaderboard) controller.initLeaderboard(this.currentUser);
+        else controller.setUser(this.currentUser);
+
+        // Create the scene with the new root node
+        Scene scene = new Scene(root, 900, 400);
+        scene.getStylesheets().add(getClass().getResource("styles/historyGames.css").toExternalForm());
+
+        // Get the current stage using the event source
+        Stage appStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        // Set the new scene on the stage
+        appStage.setScene(scene);
+        appStage.show();
     }
 }

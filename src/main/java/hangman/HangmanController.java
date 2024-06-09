@@ -161,9 +161,9 @@ public class HangmanController {
     }
 
     private void showGameOver(boolean didWin) {
-        this.game.endGame(player.getUsername());
-        timeline.stop();
         this.game.setDidWin(didWin);
+        timeline.stop();
+        this.game.endGame(player.getUsername());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(didWin ? "Congrats!" : "Game Over!");

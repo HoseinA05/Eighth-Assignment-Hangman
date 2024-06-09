@@ -58,7 +58,7 @@
 
         <Button text="Play!" styleClass="menuBtn" onAction="#playGameHandler"/>
         <Button text="History of Games" styleClass="menuBtn" onAction="#showHistoryGames"/>
-        <Button text="Leaderboard" styleClass="menuBtn"/>
+        <Button text="Leaderboard" styleClass="menuBtn" onAction="#showHistoryGames"/>
     </VBox>
 
     <Label AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" fx:id="toastText" styleClass="toastText"/>
